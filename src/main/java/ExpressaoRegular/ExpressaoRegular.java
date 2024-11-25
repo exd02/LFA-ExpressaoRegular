@@ -19,8 +19,12 @@ public class ExpressaoRegular {
     public String ASSINATURA_FUNCAO;
     public String OPERADOR_ARITMETICO;
     public String EXPRESSAO;
-
-
+    public String EXPRESSAO_ARITMETICA;
+    public String ATRIBUTO;
+    public String INDEXACAO;
+    public String CHAMADA_METODO;
+    public String LFA13_EX2;
+    public String LFA13_EX3;
 
     /**
      * *****************************************
@@ -83,6 +87,19 @@ public class ExpressaoRegular {
                 + EXPRESSAO + BRANCOS + "\\)" + BRANCOS;
 
         ATRIBUICAO = IDENT + BRANCOS + "=" + BRANCOS + REAL;
+
+        ATRIBUTO = "(" + IDENT + "(\\." + IDENT + ")*)";
+        INDEXACAO = IDENT + "\\[" + BRANCOS + DIGITOS + BRANCOS + "\\]";
+        CHAMADA_METODO = IDENT + "\\(" + BRANCOS + "(" + PARAMETRO + "(" + BRANCOS + "," + BRANCOS + PARAMETRO + ")*)?" + BRANCOS + "\\)";
+
+        EXPRESSAO_ARITMETICA = "(" +
+                "(-?" + DIGITOS + "|" + IDENT + "|" + INDEXACAO + "|" + CHAMADA_METODO + "|" + ATRIBUTO + ")" +
+                "(" + BRANCOS + OPERADOR_ARITMETICO + BRANCOS +
+                "(-?" + DIGITOS + "|" + IDENT + "|" + INDEXACAO + "|" + CHAMADA_METODO + "|" + ATRIBUTO + "))*" +
+                ")";
+
+        LFA13_EX2 = "^a[a-zA-Z]*a$";
+        LFA13_EX3 = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$";
     }
 
     public void confere(String exp, String sentenca) {
