@@ -1,7 +1,7 @@
 package ExpressaoRegular;
 
 public class ExpressaoRegular {
-    public String BRANCO, BRANCOS;
+    public String BRANCO, BRANCOS, BRANCOS_MIN1;
     public String DIGITO, DIGITOS;
     public String LETRA, LETRAS;
     public String IDENT;
@@ -10,6 +10,11 @@ public class ExpressaoRegular {
     public String INTEIRO;
     public String NUMEROS;
     public String ATRIBUICAO;
+    public String OPERADOR;
+    public String CONDICIONAL;
+    public String PARAMETRO;
+    public String OPERADOR_ARITMETICO;
+    public String EXPRESSAO;
 
     // trabalho 02
     public String ASSINATURA_FUNCAO;
@@ -35,21 +40,35 @@ public class ExpressaoRegular {
      * ******************************************
      */
     public ExpressaoRegular() {
-        //' ' (espaço), '\t' TAB, '\n' new line, '\r' volta o cursos para o inicio da linha, '\f' avanço de pagina, '\v' vertical TAB - (usado em configuraçoes de impressora)
-        BRANCO = "(\\s)"; // [ \t\n\r\f\v] onde
+        BRANCO = "(\\s)";
         BRANCOS = BRANCO + "*";
+        BRANCOS_MIN1 = BRANCO + "+";
+
         DIGITO = "([0-9])";
-        DIGITOS = DIGITO + "*";
+        DIGITOS = DIGITO + "+";
         LETRA = "([A-Za-z])";
         LETRAS = LETRA + "*";
+
         IDENT = "(" + LETRA + "(" + LETRA + "|" + DIGITO + ")*)";
-        EXPONENCIAL = "(E(\\+|-)" + DIGITOS + ")";
-        REAL = "(\\-?" + DIGITOS + "\\.?" + DIGITOS + EXPONENCIAL+")";
-        INTEIRO = "("+DIGITOS + EXPONENCIAL + "?)";
+        EXPONENCIAL = "(E(\\+|-)" + DIGITOS + ")?";
+        REAL = "(\\-?" + DIGITOS + "\\.?" + DIGITOS + EXPONENCIAL + ")";
+        INTEIRO = "(\\-?" + DIGITOS + ")";
         NUMEROS = "(" + INTEIRO + "|" + REAL + ")";
+        PARAMETRO = "(" + IDENT + "|" + NUMEROS + ")";
+
+        OPERADOR = "(<|>|<=|>=|==|!=)";
+        OPERADOR_ARITMETICO = "(\\+|\\-|\\*|/)";
+
+        EXPRESSAO = PARAMETRO +
+                "(" + BRANCOS + OPERADOR_ARITMETICO + BRANCOS +
+                PARAMETRO + ")*";
+
+        CONDICIONAL = BRANCOS + "if" + BRANCOS + "\\(" + BRANCOS
+                + EXPRESSAO + BRANCOS
+                + OPERADOR + BRANCOS
+                + EXPRESSAO + BRANCOS + "\\)" + BRANCOS;
 
         ATRIBUICAO = IDENT + BRANCOS + "=" + BRANCOS + REAL;
-
         ASSINATURA_FUNCAO = "[A-Za-z-_]+";
     }
 
