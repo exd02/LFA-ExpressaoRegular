@@ -12,16 +12,15 @@ public class ExpressaoRegular {
     public String ATRIBUICAO;
     public String OPERADOR;
     public String CONDICIONAL;
+    public String TIPO;
     public String PARAMETRO;
+    public String PARAMETROS_FUNCAO;
+    public String DECLARACAO;
+    public String ASSINATURA_FUNCAO;
     public String OPERADOR_ARITMETICO;
     public String EXPRESSAO;
-    public String EXPRESSAO_ARITMETICA;
-    public String INDEXACAO;
-    public String CHAMADA_METODO;
-    public String ATRIBUTO;
 
-    // trabalho 02
-    public String ASSINATURA_FUNCAO;
+
 
     /**
      * *****************************************
@@ -51,7 +50,7 @@ public class ExpressaoRegular {
         DIGITO = "([0-9])";
         DIGITOS = DIGITO + "+";
         LETRA = "([A-Za-z])";
-        LETRAS = LETRA + "*";
+        LETRAS = LETRA + "+";
 
         IDENT = "(" + LETRA + "(" + LETRA + "|" + DIGITO + ")*)";
         EXPONENCIAL = "(E(\\+|-)" + DIGITOS + ")?";
@@ -60,13 +59,19 @@ public class ExpressaoRegular {
         NUMEROS = "(" + INTEIRO + "|" + REAL + ")";
         PARAMETRO = "(" + IDENT + "|" + NUMEROS + ")";
 
+        TIPO = "(void|int|float|double|char|boolean|long|short|byte|String)";
+        DECLARACAO = TIPO + BRANCOS_MIN1 + IDENT;
+
+        PARAMETROS_FUNCAO =
+                BRANCOS + "\\("                                     // (
+                    + BRANCOS + DECLARACAO + BRANCOS +              // int i
+                    "(," + BRANCOS + DECLARACAO + BRANCOS + ")*" +  // , int x
+                "\\)" + BRANCOS;                                    // );
+
+        ASSINATURA_FUNCAO = BRANCOS + DECLARACAO + BRANCOS + PARAMETROS_FUNCAO + BRANCOS + ";";
+
         OPERADOR = "(<|>|<=|>=|==|!=)";
         OPERADOR_ARITMETICO = "(\\+|\\-|\\*|/)";
-
-        ATRIBUTO = "(" + IDENT + "(\\." + IDENT + ")*)";
-
-        INDEXACAO = IDENT + "\\[" + BRANCOS + DIGITOS + BRANCOS + "\\]";
-        CHAMADA_METODO = IDENT + "\\(" + BRANCOS + "(" + PARAMETRO + "(" + BRANCOS + "," + BRANCOS + PARAMETRO + ")*)?" + BRANCOS + "\\)";
 
         EXPRESSAO = PARAMETRO +
                 "(" + BRANCOS + OPERADOR_ARITMETICO + BRANCOS +
@@ -78,13 +83,6 @@ public class ExpressaoRegular {
                 + EXPRESSAO + BRANCOS + "\\)" + BRANCOS;
 
         ATRIBUICAO = IDENT + BRANCOS + "=" + BRANCOS + REAL;
-        ASSINATURA_FUNCAO = "[A-Za-z-_]+";
-
-        EXPRESSAO_ARITMETICA = "(" +
-                "(-?" + DIGITOS + "|" + IDENT + "|" + INDEXACAO + "|" + CHAMADA_METODO + "|" + ATRIBUTO + ")" +
-                "(" + BRANCOS + OPERADOR_ARITMETICO + BRANCOS +
-                "(-?" + DIGITOS + "|" + IDENT + "|" + INDEXACAO + "|" + CHAMADA_METODO + "|" + ATRIBUTO + "))*" +
-                ")";
     }
 
     public void confere(String exp, String sentenca) {
