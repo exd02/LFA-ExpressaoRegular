@@ -98,6 +98,7 @@ public class ExpressaoRegular {
                 "(-?" + DIGITOS + "|" + IDENT + "|" + INDEXACAO + "|" + CHAMADA_METODO + "|" + ATRIBUTO + "))*" +
                 ")";
 
+        // Question 5
         LFA13_EX2 = "^a[a-zA-Z]*a$";
         LFA13_EX3 = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$";
     }
