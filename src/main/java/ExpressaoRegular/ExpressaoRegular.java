@@ -15,6 +15,10 @@ public class ExpressaoRegular {
     public String PARAMETRO;
     public String OPERADOR_ARITMETICO;
     public String EXPRESSAO;
+    public String EXPRESSAO_ARITMETICA;
+    public String INDEXACAO;
+    public String CHAMADA_METODO;
+    public String ATRIBUTO;
 
     // trabalho 02
     public String ASSINATURA_FUNCAO;
@@ -59,6 +63,11 @@ public class ExpressaoRegular {
         OPERADOR = "(<|>|<=|>=|==|!=)";
         OPERADOR_ARITMETICO = "(\\+|\\-|\\*|/)";
 
+        ATRIBUTO = "(" + IDENT + "(\\." + IDENT + ")*)";
+
+        INDEXACAO = IDENT + "\\[" + BRANCOS + DIGITOS + BRANCOS + "\\]";
+        CHAMADA_METODO = IDENT + "\\(" + BRANCOS + "(" + PARAMETRO + "(" + BRANCOS + "," + BRANCOS + PARAMETRO + ")*)?" + BRANCOS + "\\)";
+
         EXPRESSAO = PARAMETRO +
                 "(" + BRANCOS + OPERADOR_ARITMETICO + BRANCOS +
                 PARAMETRO + ")*";
@@ -70,6 +79,12 @@ public class ExpressaoRegular {
 
         ATRIBUICAO = IDENT + BRANCOS + "=" + BRANCOS + REAL;
         ASSINATURA_FUNCAO = "[A-Za-z-_]+";
+
+        EXPRESSAO_ARITMETICA = "(" +
+                "(-?" + DIGITOS + "|" + IDENT + "|" + INDEXACAO + "|" + CHAMADA_METODO + "|" + ATRIBUTO + ")" +
+                "(" + BRANCOS + OPERADOR_ARITMETICO + BRANCOS +
+                "(-?" + DIGITOS + "|" + IDENT + "|" + INDEXACAO + "|" + CHAMADA_METODO + "|" + ATRIBUTO + "))*" +
+                ")";
     }
 
     public void confere(String exp, String sentenca) {
