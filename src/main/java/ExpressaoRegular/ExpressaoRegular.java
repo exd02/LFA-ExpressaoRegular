@@ -19,9 +19,10 @@ public class ExpressaoRegular {
     public String ASSINATURA_FUNCAO;
     public String OPERADOR_ARITMETICO;
     public String EXPRESSAO;
+    public String ITEM_EXPRESSAO_ARITMETICA;
     public String EXPRESSAO_ARITMETICA;
-    public String ATRIBUTO;
-    public String INDEXACAO;
+    public String ACESSO_PROPRIEDADE;
+    public String ACESSO_VETOR_COLCHETE;
     public String CHAMADA_METODO;
     public String LFA13_EX2;
     public String LFA13_EX3;
@@ -66,16 +67,19 @@ public class ExpressaoRegular {
         TIPO = "(void|int|float|double|char|boolean|long|short|byte|String)";
         DECLARACAO = TIPO + BRANCOS_MIN1 + IDENT;
 
+        // 2 parametro de funcao
         PARAMETROS_FUNCAO =
                 BRANCOS + "\\("                                     // (
                     + BRANCOS + DECLARACAO + BRANCOS +              // int i
                     "(," + BRANCOS + DECLARACAO + BRANCOS + ")*" +  // , int x
                 "\\)" + BRANCOS;                                    // );
 
+        // 1 assinatura de funcao
         ASSINATURA_FUNCAO = BRANCOS + DECLARACAO + BRANCOS + PARAMETROS_FUNCAO + BRANCOS + ";";
 
+        // 3 condicional
         OPERADOR = "(<|>|<=|>=|==|!=)";
-        OPERADOR_ARITMETICO = "(\\+|\\-|\\*|/)";
+        OPERADOR_ARITMETICO = "(\\+|\\-|\\*|\\/)";
 
         EXPRESSAO = PARAMETRO +
                 "(" + BRANCOS + OPERADOR_ARITMETICO + BRANCOS +
@@ -88,15 +92,20 @@ public class ExpressaoRegular {
 
         ATRIBUICAO = IDENT + BRANCOS + "=" + BRANCOS + REAL;
 
-        ATRIBUTO = "(" + IDENT + "(\\." + IDENT + ")*)";
-        INDEXACAO = IDENT + "\\[" + BRANCOS + DIGITOS + BRANCOS + "\\]";
+        // 4 expressao matematica
+        ACESSO_PROPRIEDADE = "\\." + IDENT;
+        ACESSO_VETOR_COLCHETE = IDENT + "\\[" + BRANCOS + DIGITOS + BRANCOS + "\\](" + ACESSO_PROPRIEDADE + ")?";
         CHAMADA_METODO = IDENT + "\\(" + BRANCOS + "(" + PARAMETRO + "(" + BRANCOS + "," + BRANCOS + PARAMETRO + ")*)?" + BRANCOS + "\\)";
-
-        EXPRESSAO_ARITMETICA = "(" +
-                "(-?" + DIGITOS + "|" + IDENT + "|" + INDEXACAO + "|" + CHAMADA_METODO + "|" + ATRIBUTO + ")" +
-                "(" + BRANCOS + OPERADOR_ARITMETICO + BRANCOS +
-                "(-?" + DIGITOS + "|" + IDENT + "|" + INDEXACAO + "|" + CHAMADA_METODO + "|" + ATRIBUTO + "))*" +
+        ITEM_EXPRESSAO_ARITMETICA = "(" + NUMEROS + "|" + IDENT + "|" + CHAMADA_METODO + "|" + ACESSO_VETOR_COLCHETE + ")";
+        EXPRESSAO_ARITMETICA =
+                "(" +
+                    BRANCOS + ITEM_EXPRESSAO_ARITMETICA + BRANCOS +
+                    "(" +
+                        BRANCOS + OPERADOR_ARITMETICO +
+                        BRANCOS + ITEM_EXPRESSAO_ARITMETICA + BRANCOS +
+                    ")*" +
                 ")";
+
 
         // Question 5
         LFA13_EX2 = "^a[a-zA-Z]*a$";
